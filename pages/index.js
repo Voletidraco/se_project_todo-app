@@ -31,8 +31,12 @@ addTodoButton.addEventListener("click", () => {
 
 addTodoCloseBtn.addEventListener("click", () => {
   closeModal(addTodoPopup);
-  todoValidator.resetValidation();
 });
+
+function renderTodo(item) {
+  const todo = generateTodo(item);
+  todosList.append(todo);
+}
 
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -45,15 +49,13 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   const id = uuidv4();
   const values = { name, date, id };
-  const todo = generateTodo(values);
-  todosList.append(todo);
+  renderTodo(values);
   closeModal(addTodoPopup);
   todoValidator.resetValidation();
 });
 
 initialTodos.forEach((item) => {
-  const todo = generateTodo(item);
-  todosList.append(todo);
+  renderTodo(item);
 });
 
 const todoValidator = new FormValidator(validationConfig, addTodoForm);
